@@ -8,3 +8,18 @@ class usuario(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class compra(models.Model):
+    producto = models.CharField(max_length = 40)
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return self.producto
+
+class objeto_inventario(models.Model):
+    nombre = models.CharField(max_length=40)
+    tipo = models.CharField(max_length=40)
+    cantidad = models.IntegerField()
+
+    def __str__(self):
+        return self.nombre

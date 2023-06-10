@@ -46,15 +46,18 @@
 
         <div class="form-floating">
           <input type="text" name="nombre" class="form-control" id="nombre" placeholder="">
-          <label for="floatingInput">Nombre</label>
+          <label for="floatingInput">Producto</label>
         </div>
+
+        <label class="floatingInput">Tipo</label>
+        <select class="form-select" name = "tipo">
+          <option selected="">Objeto de Inventario</option>
+          <option value="Producto">Producto</option>
+        </select>
+
         <div class="form-floating">
-          <input type="text" name="apellidos" class="form-control" id="apellidos" placeholder="Password">
-          <label for="floatingPassword">Apellidos</label>
-        </div>
-        <div class="form-floating">
-          <input type="text" name="ci" class="form-control" id="ci" placeholder="Password">
-          <label for="floatingPassword">CI</label>
+          <input type="number" name="cantidad" class="form-control" id="cantidad" placeholder="">
+          <label for="floatingInput">Cantidad</label>
         </div>
         <br>
         <br>

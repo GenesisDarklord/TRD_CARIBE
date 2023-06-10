@@ -22,7 +22,7 @@ function validateUser(){
 }
 
 function validateAccount(){
-    var user = document.getElementById("user");
+    var user = document.getElementById("username");
     var password = document.getElementById("password");
     var passwordConfirm = document.getElementById("passwordConfirm");
     var alertDiv = document.getElementById("alertDiv");
@@ -34,7 +34,7 @@ function validateAccount(){
         alertDiv.classList.add("show");
         return false;
     }
-    else if(password === passwordConfirm){
+    else if(password.value !== passwordConfirm.value){
         alertLabel.textContent= "Las contraseñas no coinciden";
         alertDiv.classList.remove("hide");
         alertDiv.classList.add("show");

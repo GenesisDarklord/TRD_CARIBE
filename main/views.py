@@ -1,16 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .forms import registrarseForm, agregarUsuarioForm
-from .models import usuario
+from .forms import registrarseForm, agregarUsuarioForm, agregarCompraForm, agregarObjetoInventarioForm
+from .models import usuario, compra, objeto_inventario
 
 # Create your views here.
-@login_required
-def gestionarUsuario(request):
-    usuarios = usuario.objects.order_by('nombre')
-    context = {'lista_usuarios' : usuarios}
-    return render(request, 'gestionarUsuario.html', context)
-
 def paginaPrincipal (request):
     return render (request, 'paginaPrincipal.html')
 
@@ -28,6 +22,14 @@ def register (request):
             return redirect('paginaPrincipal')
 
     return render (request, 'registration/register.html', data)
+
+# Para Gestionar usuario  ########################
+
+@login_required
+def gestionarUsuario(request):
+    usuarios = usuario.objects.order_by('nombre')
+    context = {'lista_usuarios' : usuarios}
+    return render(request, 'gestionarUsuario.html', context)
 
 def agregarUsuario (request):
     if request.method == 'POST':
@@ -47,7 +49,7 @@ def eliminarUsuario(request, idUsuario):
     u.delete()
     return redirect('gestionarUsuario')
 
-#Para modificar usuario
+#   Para modificar usuario   #########
 def verUsuario(request, idUsuario):
     u = get_object_or_404(usuario, id = idUsuario)
     form = agregarUsuarioForm(instance=u)
@@ -62,3 +64,56 @@ def guardarUsuario(request, idUsuario):
         return redirect('gestionarUsuario')
 
     return render(request, 'modificarUsuario.html', {'form': form})
+###################################
+
+
+#   Para Las compras  ############
+@login_required
+def administrarCompra(request):
+    compras = compra.objects.order_by('producto')
+    context = {'lista_compras' : compras}
+    return render (request, 'administrarCompra.html', context)
+
+def eliminarCompra(request, idCompra):
+    c = compra.objects.get(id = idCompra)
+    c.delete()
+    return redirect('administrarCompra')
+
+def agregarCompra (request):
+    if request.method == 'POST':
+        form = agregarCompraForm (request.POST)
+        
+        if form.is_valid():
+            nuevoElemento = form.save()
+            return redirect('administrarCompra')
+
+    else:
+        form = agregarCompraForm()
+
+    return render (request, 'agregarCompra.html', {'form' : form})
+#########################
+
+#  Para Administrar Inventario  ######################
+@login_required
+def administrarInventario(request):
+    objetos = objeto_inventario.objects.order_by('nombre')
+    context = {'lista_objetos' : objetos}
+    return render(request, 'administrarInventario.html', context)
+
+def eliminarObjetoInventario(request, idObjeto):
+    o = objeto_inventario.objects.get(id = idObjeto)
+    o.delete()
+    return redirect('administrarInventario')
+
+def agregarObjetoInventario (request):
+    if request.method == 'POST':
+        form = agregarObjetoInventarioForm (request.POST)
+        
+        if form.is_valid():
+            nuevoElemento = form.save()
+            return redirect('administrarInventario')
+
+    else:
+        form = agregarObjetoInventarioForm()
+
+    return render (request, 'agregarObjetoInventario.html', {'form' : form})
